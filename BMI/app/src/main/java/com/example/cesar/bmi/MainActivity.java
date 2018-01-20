@@ -3,6 +3,7 @@ package com.example.cesar.bmi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +28,7 @@ public class MainActivity extends Activity {
         sesso = (Spinner) findViewById(R.id.sesso);
 
         // Array for the spinner
-        final String[] sessi = {"Mujer", "Hombre"};
+        final String[] sessi = {"Donna", "Uomo"};
         // ArrayAdapter to give data to the spinner, it is a ModelViewController
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sessi);
         // How to go through the array
@@ -51,11 +52,31 @@ public class MainActivity extends Activity {
     // For the button Calcolare IMC, method declared from the view
     public void imc(View view){
         Persona persona = new Persona();
-        persona.nome = nome.getText().toString();
-        persona.peso = Double.parseDouble(peso.getText().toString());
-        persona.statura = Double.parseDouble(statura.getText().toString());
+        // Nome persona
+        String nomeTesto = nome.getText().toString();
+        if(TextUtils.isEmpty(nomeTesto)){
+            nome.setError("Cattura un valore");
+            return;
+        }
+        persona.nome = nomeTesto;
+        // Peso persona
+        String pesoTesto = peso.getText().toString();
+        if(TextUtils.isEmpty(pesoTesto)){
+            peso.setError("Cattura un valore");
+            return;
+        }
+        persona.peso = Double.parseDouble(pesoTesto);
+        // Statura persona
+        String staturaTesto = statura.getText().toString();
+        if(TextUtils.isEmpty(staturaTesto)){
+            statura.setError("Cattura un valore");
+            return;
+        }
+        persona.statura = Double.parseDouble(staturaTesto);
         persona.sesso = sessoSelezionato;
+        // Intent for go to RisultatiActivity from MainActivity
         Intent intent = new Intent(MainActivity.this, RisultatiActivity.class);
+        // Pass Persona to RisultatiView from the Persona created on MainActivity
         intent.putExtra("persona", persona);
         startActivity(intent);
     }
