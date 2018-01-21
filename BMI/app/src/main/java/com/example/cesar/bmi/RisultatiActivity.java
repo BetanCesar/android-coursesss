@@ -129,6 +129,14 @@ public class RisultatiActivity extends Activity {
         startActivity(i);
     }
 
+    public void share(View view){
+        Intent textShareIntent = new Intent(Intent.ACTION_SEND);
+        textShareIntent.putExtra(Intent.EXTRA_SUBJECT, "Messaggio");
+        textShareIntent.putExtra(Intent.EXTRA_TEXT, "Il mio IMC è: " + imc.getText().toString());
+        textShareIntent.setType("text/plain");
+        startActivity(Intent.createChooser(textShareIntent, "Share text with..."));
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
