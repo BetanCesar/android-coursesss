@@ -51,7 +51,7 @@ public class RisultatiActivity extends Activity {
         energia.setText("Energia: " + String.valueOf(doubleTwoDecimals(energiaDouble)) + " kCal");
 
         // Set image and description text
-        int color = Integer.parseInt("64e500", 16)+0xFF000000;
+        int color = Integer.parseInt("a4cf31", 16)+0xFF000000;
         descrizioneIMC.setTextColor(color);
         if(persona.sesso.equalsIgnoreCase("Donna")){
             if(imcDouble <= 17.5){
