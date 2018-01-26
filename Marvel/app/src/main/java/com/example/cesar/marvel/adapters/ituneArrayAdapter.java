@@ -1,6 +1,7 @@
 package com.example.cesar.marvel.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.cesar.marvel.R;
 import  com.example.cesar.marvel.pojo.itune;
 
 /**
@@ -25,6 +27,10 @@ public class ituneArrayAdapter extends ArrayAdapter<itune> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return super.getView(position, convertView, parent);
+        itune ituneO = arrayList.get(position);
+        if(convertView == null){
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.itunes_layout, parent);
+        }
+        return convertView;
     }
 }

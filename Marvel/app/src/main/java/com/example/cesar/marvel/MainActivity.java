@@ -1,7 +1,6 @@
 package com.example.cesar.marvel;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -12,12 +11,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import com.example.cesar.marvel.adapters.ituneArrayAdapter;
+import com.example.cesar.marvel.pojo.itune;
 
 public class MainActivity extends Activity {
 
     private ArrayAdapter<String> arrayAdapter;
 
     private ListView listView;
+    private ituneArrayAdapter ituneArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,32 +28,36 @@ public class MainActivity extends Activity {
         listView = (ListView) findViewById(R.id.list);
 
         // Array adapter to give data to the list from te service
-        arrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, new ArrayList<String>());
+        ituneArrayAdapter = new ituneArrayAdapter(this,
+                R.layout.itunes_layout, new ArrayList<itune>());
         // Give the adapter to the list
-        listView.setAdapter(arrayAdapter);
-        new ProcesaJson(arrayAdapter).execute("https://itunes.apple.com/search?term=maluma");
+        listView.setAdapter(ituneArrayAdapter);
+        new ProcesaJson(ituneArrayAdapter).execute("https://itunes.apple.com/search?term=maluma");
     }
     // Async task
-    public class ProcesaJson extends AsyncTask<String, Integer, ArrayList<String>> {
-        private ArrayAdapter<String> adapter;
-        public ProcesaJson(ArrayAdapter<String> adapter){
+    public class ProcesaJson extends AsyncTask<String, Integer, ArrayList<itune>> {
+        private ituneArrayAdapter adapter;
+        public ProcesaJson(ituneArrayAdapter adapter){
             this.adapter = adapter;
         }
         @Override
-        protected ArrayList<String> doInBackground(String... urls) {
+        protected ArrayList<itune> doInBackground(String... urls) {
             // New json
             Json json = new Json();
             // Response from the service as a string
             String jsonString = json.serviceCall(urls[0]);
-            ArrayList<String> arrayList = new ArrayList<>();
+            ArrayList<itune> arrayList = new ArrayList<>();
             // Give data to the array list. Only the collection name
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
                 JSONArray jsonArray = jsonObject.getJSONArray("results");
                 for (int i = 0; i < jsonArray.length(); i++){
                     JSONObject dato = jsonArray.getJSONObject(i);
-                    arrayList.add(dato.getString("collectionName"));
+                    itune ituneObj = new itune();
+                    ituneObj.collectionName = dato.getString("collectionName");
+                    ituneObj.trackName = dato.getString("trackName");
+                    ituneObj.trackPrice = dato.getDouble("trackPrice");
+                    arrayList.add(ituneObj);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -62,7 +68,7 @@ public class MainActivity extends Activity {
 
         // Create new method to give the data to the adapter
         @Override
-        protected void onPostExecute(ArrayList<String> strings) {
+        protected void onPostExecute(ArrayList<itune> strings) {
             adapter.clear();
             adapter.addAll(strings);
             adapter.notifyDataSetChanged();
