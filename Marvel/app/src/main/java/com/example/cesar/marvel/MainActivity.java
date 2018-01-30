@@ -121,10 +121,13 @@ public class MainActivity extends Activity {
 
             /*
             Investiga y reporta qué es md5?
-
-
-
+            MD5 es una función hash que produce un hash de 128 bits. En un principio fue diseñado y
+            utilizado como una función criptográfica, pero debido a sus vulverabilidades puede ser
+            vulnerado por fuerza bruta, por ello hoy en día es utilizado como un "checksum" que es
+            para verificar la integridad de los datos y así verificar que un archivo no haya sido
+            modificado.
             */
+
             String ts = Long.toString(System.currentTimeMillis() / 1000);
             String apikey = "1681a9eefcf8fbf43de66c59727718da";
             String hash = md5(ts + "ede49375699321e3736436b53011574333433f40" + "1681a9eefcf8fbf43de66c59727718da");
@@ -179,7 +182,6 @@ public class MainActivity extends Activity {
                     buffer.append(line + "\n");
                 }
 
-
                 /*
                     JSON Obtenido
                 */
@@ -223,8 +225,12 @@ public class MainActivity extends Activity {
 
 
     /*
-        Investiga y reporta qué es md5:
-
+    Investiga y reporta qué es md5:
+    MD5 es una función hash que produce un hash de 128 bits. En un principio fue diseñado y
+    utilizado como una función criptográfica, pero debido a sus vulverabilidades puede ser
+    vulnerado por fuerza bruta, por ello hoy en día es utilizado como un "checksum" que es
+    para verificar la integridad de los datos y así verificar que un archivo no haya sido
+    modificado.
     */
     public static String md5(String s) {
         try {
@@ -241,6 +247,7 @@ public class MainActivity extends Activity {
 
     /*
         Investiga y reporta qué hace esta aplicación
+        Códifica un texto en hexadecimal
     */
     public static String hexEncode(byte[] bytes) {
         char[] result = new char[bytes.length*2];
