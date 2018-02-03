@@ -1,10 +1,9 @@
-package com.example.cesar.marvel;
+package com.example.cesar.ghandy;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
 
 public class SplashActivity extends Activity {
 
@@ -19,7 +18,6 @@ public class SplashActivity extends Activity {
                 startActivity(it);
                 finish();
             }
-        }, 3000);
-
+        }, 5000);
     }
 }
